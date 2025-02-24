@@ -76,3 +76,14 @@ if uploaded_file is not None:
             st.write(f"{class_name}: {prediction[0][i]:.2%}")
 
 st.markdown("---")
+
+import gdown
+import os
+
+file_id = "19ZcrvFg_tVvc_M19VAabzkMJtWGes5Lt"
+url = 'https://drive.google.com/file/d/19ZcrvFg_tVvc_M19VAabzkMJtWGes5Lt/view?usp=drive_link'
+model_path = "trained_plant_disease_model.keras"
+
+if not os.path.exists(model_path):
+    st.warning("Downloading model from Google Drive...")
+    gdown.download(url, model_path, quiet=False)
