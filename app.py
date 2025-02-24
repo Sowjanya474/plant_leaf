@@ -23,7 +23,9 @@ def preprocess_image(image):
     """Preprocess the uploaded image for model prediction."""
     image = image.convert("RGB")  # Ensure the image is in RGB format
     image = image.resize((128, 128))  # Resize to match model input size
-    image = np.expand_dims(image, axis=0)  # Expand dims to match batch size
+    input_arr = tf.keras.preprocessing.image.img_to_array(image)
+
+    image = np.expand_dims(input_arr, axis=0)  # Expand dims to match batch size
     return image
 
 # Streamlit UI with Modern Design
@@ -85,13 +87,4 @@ if uploaded_file is not None:
 
 st.markdown("---")
 
-import gdown
-import os
 
-file_id = "19ZcrvFg_tVvc_M19VAabzkMJtWGes5Lt"
-url = 'https://drive.google.com/file/d/19ZcrvFg_tVvc_M19VAabzkMJtWGes5Lt/view?usp=drive_link'
-model_path = "trained_plant_disease_model.keras"
-
-if not os.path.exists(model_path):
-    st.warning("Downloading model from Google Drive...")
-    gdown.download(url, model_path, quiet=False)
