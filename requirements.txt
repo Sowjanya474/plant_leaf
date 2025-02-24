@@ -1,0 +1,12 @@
+numpy
+scikit-learn
+streamlit
+streamlit-option-menu
+pandas
+matplotlib
+seaborn
+tensorflow
+keras
+opencv_python_headless
+gdown
+seaborn
