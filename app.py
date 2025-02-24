@@ -2,10 +2,19 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+import gdown
+import os
 
+file_id = "19ZcrvFg_tVvc_M19VAabzkMJtWGes5Lt"
+url = 'https://drive.google.com/file/d/19ZcrvFg_tVvc_M19VAabzkMJtWGes5Lt/view?usp=drive_link'
+model_path = "trained_plant_disease_model.keras"
+
+if not os.path.exists(model_path):
+    st.warning("Downloading model from Google Drive...")
+    gdown.download(url, model_path, quiet=False)
 # Load the trained model
-MODEL_PATH = "trained_plant_disease_model.keras"
-model = tf.keras.models.load_model(MODEL_PATH)
+
+model = tf.keras.models.load_model(model_path)
 
 # Define class names (update according to your dataset)
 class_names = ["Healthy", "Early Blight", "Late Blight"]
@@ -14,7 +23,6 @@ def preprocess_image(image):
     """Preprocess the uploaded image for model prediction."""
     image = image.convert("RGB")  # Ensure the image is in RGB format
     image = image.resize((128, 128))  # Resize to match model input size
-    image = np.array(image) / 255.0  # Normalize pixel values
     image = np.expand_dims(image, axis=0)  # Expand dims to match batch size
     return image
 
